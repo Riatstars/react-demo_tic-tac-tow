@@ -43,7 +43,6 @@ function Game() {
   const handleClick = (i) => {
     if (!winner) {
       if (squares[i] === null) {
-        
         squares[i] =  xIsNext? "X" : "O";
         const historyLog = [...squares]
         //square làm nhiễu data trong history, nên phải chứa trạng thái hiện tại của squares trong 1 biến tạm để gắn vào history
@@ -51,16 +50,7 @@ function Game() {
         setXIsNext((prevState)=>!prevState )
         setHistory((history)=> [...history, historyLog])
         setWinner(calculateWinner(squares))
-
-
     }
-    
-    
-    
-    
-
-
-    
   };
 }
   const handleHistoryClick = (step,index) =>{
@@ -68,15 +58,12 @@ function Game() {
     //step cũng giống như squares ở trên, phải chứa trạng thái hiện tại trong biến tạm để lấy giá trị rồi mới đặt cho squares
     //
     setSquares(timeSlice)
-
     setHistory(history.slice(0,index+1))
-
-
     setXIsNext(((index%2)===0)? true: false)
     setWinner(null)
     console.log('history click')
   }
-
+  
   //Restart game
   const handlRestart = () => {
     "Your code here";

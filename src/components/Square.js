@@ -5,9 +5,7 @@ function Square({squareValue, handleClick}) {
     <button 
     className={"square"} 
     onClick={handleClick}>
-
     {squareValue}
-
     </button>
   );
 }

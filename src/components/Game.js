@@ -46,6 +46,8 @@ function Game() {
         
         squares[i] =  xIsNext? "X" : "O";
         const historyLog = [...squares]
+        //square làm nhiễu data trong history, nên phải chứa trạng thái hiện tại của squares trong 1 biến tạm để gắn vào history
+        //vì nếu gắn thẳng setHistory((history)=> [...history, squares]) thì sẽ bị lỗi dữ liệu
         setXIsNext((prevState)=>!prevState )
         setHistory((history)=> [...history, historyLog])
         setWinner(calculateWinner(squares))
@@ -63,6 +65,8 @@ function Game() {
 }
   const handleHistoryClick = (step,index) =>{
     const timeSlice = [...step]
+    //step cũng giống như squares ở trên, phải chứa trạng thái hiện tại trong biến tạm để lấy giá trị rồi mới đặt cho squares
+    //
     setSquares(timeSlice)
 
     setHistory(history.slice(0,index+1))

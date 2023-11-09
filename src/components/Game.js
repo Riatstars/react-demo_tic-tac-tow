@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board";
-
+import History from "./History";
 function Game() {
   const [squares, setSquares] = useState(Array(9).fill(null));
-  const [history, setHistory] = useState([])
-  
+  const [history, setHistory] = useState([Array(9).fill(null)])
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState(null);
 
   //Declaring a Winner
   useEffect(() => {
     "Your code here";
-
-    
-  }, [squares]);
+  }, [history]);
 
   //function to check if a player has won.
   //If a player has won, we can display text such as “Winner: X” or “Winner: O”.
@@ -41,22 +38,21 @@ function Game() {
     }
     return null;
   };
-
+  
   //Handle player
   const handleClick = (i) => {
     if (!winner) {
       if (squares[i] === null) {
         
-          squares[i] =  xIsNext? "X" : "O";
+        squares[i] =  xIsNext? "X" : "O";
+        const historyLog = [...squares]
         setXIsNext((prevState)=>!prevState )
-        console.log(squares)
-        setHistory(history.push(squares))
-        
-        
-        console.log(history)
+        setHistory((history)=> [...history, historyLog])
         setWinner(calculateWinner(squares))
+
+
     }
-   
+    
     
     
     
@@ -65,11 +61,23 @@ function Game() {
     
   };
 }
+  const handleHistoryClick = (step,index) =>{
+    const timeSlice = [...step]
+    setSquares(timeSlice)
+
+    setHistory(history.slice(0,index+1))
+
+
+    setXIsNext(((index%2)===0)? true: false)
+    setWinner(null)
+    console.log('history click')
+  }
 
   //Restart game
   const handlRestart = () => {
     "Your code here";
     setSquares(Array(9).fill(null))
+    setHistory([Array(9).fill(null)])
     setXIsNext(true)
     setWinner(null)
   };
@@ -80,6 +88,8 @@ function Game() {
       <div className="game">
         <span className="player">Next player is: {xIsNext ? "X" : "O"}</span>
         <Board squares={squares} handleClick={handleClick} />
+        <History history={history}
+        handleHistoryClick={handleHistoryClick}/>
       </div>
       <button onClick={handlRestart} className="restart-btn">
         Restart
